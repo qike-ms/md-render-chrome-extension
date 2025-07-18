@@ -1,0 +1,34 @@
+// manifest.json
+// This file defines the extension's properties and permissions.
+{
+  "manifest_version": 3,
+  "name": "Simple Markdown Renderer",
+  "version": "1.0",
+  "description": "Renders local Markdown files (.md) as HTML when opened in the browser.",
+  "icons": {
+    "128": "icon128.png"
+  },
+  
+  // This is the core part: it tells Chrome to run our script
+  // on local files that end with .md or .markdown.
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*.md",
+        "file://*/*.markdown"
+      ],
+      "js": ["marked.min.js", "content.js"],
+      "css": ["style.css"],
+      "run_at": "document_end"
+    }
+  ],
+
+  // We need to bundle the 'marked.js' library with our extension.
+  "web_accessible_resources": [
+    {
+      "resources": ["marked.min.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
+
